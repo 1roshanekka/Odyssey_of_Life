@@ -11,46 +11,52 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
-
-    var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
+    
+    @State private var selectedDate = Date()
+    
+        var body: some View {
+            NavigationSplitView {
+                ZStack{
+                    SideBarView()
                 }
-                .onDelete(perform: deleteItems)
+            } detail: {
+                EntryView()
             }
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
+//            .navigationTitle("Odyssey of Life")
+//            .navigationSplitViewColumnWidth(min: 480, ideal: 200)
             .toolbar {
                 ToolbarItem {
                     Button(action: addItem) {
                         Label("Add Item", systemImage: "plus")
                     }
+                    Button(action: searchText) {
+                        Label("Search", systemImage: "magnifyingglass")
+                    }
                 }
             }
-        } detail: {
-            Text("Select an item")
+            
         }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+    
+        private func addItem() {
+            withAnimation {
+                let newItem = Item(timestamp: Date())
+                modelContext.insert(newItem)
             }
         }
-    }
+        private func searchText() {
+            withAnimation {
+                let newItem = Item(timestamp: Date())
+                modelContext.insert(newItem)
+            }
+        }
+    
+        private func deleteItems(offsets: IndexSet) {
+            withAnimation {
+                for index in offsets {
+                    modelContext.delete(items[index])
+                }
+            }
+        }
 }
 
 #Preview {

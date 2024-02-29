@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct Odyssey_of_LifeApp: App {
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
