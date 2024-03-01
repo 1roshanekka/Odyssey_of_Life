@@ -8,21 +8,27 @@
 import SwiftUI
 
 struct SideBarView: View {
+//    @Binding var menuSelection : SideBarMenu.ID?
+    
     var body: some View {
         NavigationStack{
-            Text("Your Life Today")
-            Text("Aspects")
-            
+            SearchMenuView()
+       
             List{
-                Section("Tags"){
+                Section(header: Text("Odyssey of Life").fontWeight(.bold))
+                {
+                    MainMenuView()
+                }
+                .listRowInsets(EdgeInsets())
+                
+                Section(header: Text("Tags").fontWeight(.bold)){
                    TagColorView()
                 }
-                Section("Extras"){
+                Section(header: Text("Extras").fontWeight(.bold)){
                     ExclusiveView()
                 }
             }
         }
-        .padding(.top, 20)
     }
 }
 
